@@ -52,6 +52,33 @@ A curated consulting discovery platform where clients can search and view consul
    - Backend API: http://localhost:8000
    - API Documentation: http://localhost:8000/docs
 
+### Environment Configuration
+
+Before starting the application, you need to set up your environment variables:
+
+1. **Create a `.env` file** in the root directory:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Update the `.env` file** with your configuration:
+   ```env
+   # Database Configuration
+   DATABASE_URL=postgresql://username:password@host:port/database?sslmode=require&channel_binding=require
+   
+   # Frontend Configuration
+   REACT_APP_API_URL=http://localhost:8000
+   
+   # Backend Configuration
+   BACKEND_HOST=0.0.0.0
+   BACKEND_PORT=8000
+   
+   # Development Database (for local development)
+   LOCAL_DATABASE_URL=postgresql://postgres:password@localhost:5432/askmyconsultant
+   ```
+
+3. **Important**: Never commit your `.env` file to version control. It's already included in `.gitignore`.
+
 ## 🏗️ Project Structure
 
 ```
@@ -177,6 +204,16 @@ docker-compose up --build --force-recreate
 2. Set environment variables:
    - `DATABASE_URL`
    - `PORT` (if needed)
+
+### Production Deployment (Server)
+Use the provided `deploy.sh` script for server deployment:
+
+```bash
+# Make sure you have a .env file with production values
+sudo ./deploy.sh
+```
+
+**Note**: The deployment script will automatically load environment variables from your `.env` file.
 
 ## 📝 Sample Data
 

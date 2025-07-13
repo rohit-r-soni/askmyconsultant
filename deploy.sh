@@ -30,35 +30,47 @@ if ! command -v docker-compose &> /dev/null; then
     chmod +x /usr/local/bin/docker-compose
 fi
 
+# Check if .env file exists
+if [ ! -f .env ]; then
+    echo "❌ .env file not found!"
+    echo "Please create a .env file with your configuration variables."
+    echo "You can copy .env.example and update it with your values."
+    exit 1
+fi
+
+# Load environment variables from .env file
+echo "📝 Loading environment variables from .env file..."
+export $(cat .env | grep -v '^#' | xargs)
+
 # Create production docker-compose file
 echo "📝 Creating production docker-compose.yml..."
 cat > docker-compose.prod.yml << 'EOF'
-version: '3.8'
-
 services:
   backend:
     build: ./backend
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     environment:
       - DATABASE_URL=${DATABASE_URL}
+      - BACKEND_HOST=${BACKEND_HOST}
+      - BACKEND_PORT=${BACKEND_PORT}
     restart: unless-stopped
-    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    command: uvicorn main:app --host ${BACKEND_HOST} --port ${BACKEND_PORT}
 
   frontend:
     build: ./frontend
     ports:
       - "80:3000"
+    env_file:
+      - .env
     environment:
       - REACT_APP_API_URL=${REACT_APP_API_URL}
     depends_on:
       - backend
     restart: unless-stopped
 EOF
-
-# Set environment variables (you should customize these)
-export DATABASE_URL="postgresql://neondb_owner:npg_aSqGZf8DCtN3@ep-autumn-silence-adspcyj0-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-export REACT_APP_API_URL="http://your-server-ip:8000"
 
 # Build and start services
 echo "🐳 Building and starting services..."

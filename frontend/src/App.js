@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import ConsultantProfile from './pages/ConsultantProfile';
+import AdminPage from './pages/AdminPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/consultant/:id" element={<ConsultantProfile />} />
+            <Route path={process.env.REACT_APP_ADMIN_URL_PATH || "/admin-panel-2025-secure-access"} element={<AdminPage />} />
           </Routes>
         </main>
       </div>

@@ -26,10 +26,12 @@ The application uses a **monorepo architecture**. Both frontend and backend live
 
 ## 🎯 MVP Features
 
-### 🚀 Admin Role (Backend Only)
-- Admins create consultant profiles via API (no frontend UI for consultant registration).
-- No authentication required for MVP.
-- Database pre-seeded with sample consultant data.
+### 🚀 Admin Role (Frontend + Backend)
+- **Secure Admin Dashboard**: Password-protected admin panel accessible via secret URL
+- **Status Management**: Approve, reject, activate, or deactivate consultants
+- **Profile Management**: Create and manage consultant profiles via API
+- **Database Seeding**: Pre-seeded with sample consultant data
+- **Registration Form**: Google Forms integration for consultant applications
 
 ### 🔍 Client Role (Frontend Only)
 - **Advanced Search**: Search by name, profession, or expertise with auto-suggestions
@@ -61,6 +63,12 @@ The application uses a **monorepo architecture**. Both frontend and backend live
 - References / Testimonials
 - Website or Social Media Links
 
+### **Status Management**
+- **active**: Visible to clients in search results
+- **inactive**: Hidden from clients but preserved in database
+- **pending**: Awaiting admin approval
+- **rejected**: Rejected by admin
+
 ---
 
 ## 🔗 API Endpoints (FastAPI Backend)
@@ -74,8 +82,10 @@ The application uses a **monorepo architecture**. Both frontend and backend live
 | GET    | /api/countries           | Get unique countries                 |
 | GET    | /api/states              | Get states (filtered by country)     |
 | GET    | /api/cities              | Get cities (filtered by country/state) |
+| GET    | /api/admin/consultants   | Admin: Get all consultants (with password) |
+| PUT    | /api/admin/consultant/{id}/status | Admin: Update consultant status |
 
-> All endpoints are public in the MVP version.
+> Public endpoints are accessible to all users. Admin endpoints require password authentication.
 
 ---
 
@@ -130,18 +140,42 @@ Before starting the application, set up your environment variables:
 
 2. **Update the `.env` file** with your configuration:
    ```env
-   # Database Configuration
+   # =============================================================================
+   # DATABASE CONFIGURATION
+   # =============================================================================
+   
+   # Production Database (Neon DB)
    DATABASE_URL=postgresql://username:password@host:port/database?sslmode=require&channel_binding=require
-   
-   # Frontend Configuration
-   REACT_APP_API_URL=http://localhost:8000
-   
-   # Backend Configuration
-   BACKEND_HOST=0.0.0.0
-   BACKEND_PORT=8000
    
    # Development Database (for local development)
    LOCAL_DATABASE_URL=postgresql://postgres:password@localhost:5432/askmyconsultant
+   
+   # =============================================================================
+   # BACKEND CONFIGURATION
+   # =============================================================================
+   
+   BACKEND_HOST=0.0.0.0
+   BACKEND_PORT=8000
+   
+   # Registration Form URL (used by backend)
+   REGISTRATION_FORM_URL=https://forms.google.com/dummy-consultant-registration-form
+   
+   # Admin Configuration
+   ADMIN_PASSWORD=your-secure-password-here
+   ADMIN_URL_PATH=/admin-panel-2025-secure-access
+   
+   # =============================================================================
+   # FRONTEND CONFIGURATION
+   # =============================================================================
+   
+   # API URL for frontend to connect to backend
+   REACT_APP_API_URL=http://localhost:8000
+   
+   # Registration Form URL (used by frontend - React requires REACT_APP_ prefix)
+   REACT_APP_REGISTRATION_FORM_URL=https://forms.google.com/dummy-consultant-registration-form
+   
+   # Admin URL Path (used by frontend - React requires REACT_APP_ prefix)
+   REACT_APP_ADMIN_URL_PATH=/admin-panel-2025-secure-access
    ```
 
 3. **Important**: Never commit your `.env` file to version control.
@@ -174,6 +208,9 @@ askmyconsultant/
 │   │   │   ├── ConsultantCard.js     ← Consultant display cards
 │   │   │   └── Header.js             ← Navigation header
 │   │   ├── pages/        ← Page components
+│   │   │   ├── HomePage.js           ← Main search and results page
+│   │   │   ├── ConsultantProfile.js  ← Detailed consultant profile
+│   │   │   └── AdminPage.js          ← Admin dashboard (password protected)
 │   │   ├── services/     ← API services
 │   │   └── App.js        ← Main app component
 │   ├── public/           ← Static assets

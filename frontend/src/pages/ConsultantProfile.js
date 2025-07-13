@@ -11,9 +11,7 @@ import {
   Star, 
   Globe,
   ArrowLeft,
-  Target,
-  Landmark,
-  Building2
+  Target
 } from 'lucide-react';
 import { Loader2 } from 'lucide-react';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Briefcase, Clock, Users, Landmark, Globe, Building2 } from 'lucide-react';
+import { MapPin, Briefcase, Clock, Users } from 'lucide-react';
 
 const ConsultantCard = ({ consultant }) => {
   const locationString = [

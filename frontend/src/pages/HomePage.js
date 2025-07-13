@@ -58,10 +58,24 @@ const HomePage = () => {
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Find Your Perfect Consultant
         </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+        <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-6">
           Discover experienced consultants across various industries and locations. 
           Filter by expertise, location, and profession to find the right match for your needs.
         </p>
+        <div className="flex justify-center">
+          <button
+            onClick={() => {
+              const formUrl = process.env.REACT_APP_REGISTRATION_FORM_URL || 'https://forms.google.com/dummy-consultant-registration-form';
+              window.open(formUrl, '_blank');
+            }}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <span>Register as Consultant</span>
+          </button>
+        </div>
       </div>
       <SearchBar
         filters={filters}

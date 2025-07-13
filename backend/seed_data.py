@@ -23,7 +23,8 @@ sample_consultants = [
         "education": "MBA from Harvard Business School, BS in Economics from Stanford University",
         "projects_completed": "Led digital transformation for 3 major corporations, Increased revenue by 40% for 5 companies",
         "references_testimonials": "Sarah helped us increase revenue by 40% in just 6 months. Her strategic insights were invaluable.",
-        "website_social_links": "linkedin.com/in/sarahjohnson, sarahjohnson.com"
+        "website_social_links": "linkedin.com/in/sarahjohnson, sarahjohnson.com",
+        "status": "active"
     },
     {
         "name": "Michael Chen",
@@ -38,7 +39,8 @@ sample_consultants = [
         "education": "MS in Computer Science from MIT, BS in Engineering from UC Berkeley",
         "projects_completed": "Migrated 50+ applications to cloud, Implemented AI solutions for 3 companies",
         "references_testimonials": "Michael's technical expertise and leadership helped us scale our infrastructure 10x.",
-        "website_social_links": "github.com/michaelchen, michaelchen.dev"
+        "website_social_links": "github.com/michaelchen, michaelchen.dev",
+        "status": "active"
     },
     {
         "name": "Emily Rodriguez",
@@ -53,7 +55,8 @@ sample_consultants = [
         "education": "BA in Marketing from Northwestern University, Google Ads certification",
         "projects_completed": "Increased online sales by 200% for 4 e-commerce clients, Built brand presence for 10+ companies",
         "references_testimonials": "Emily transformed our marketing strategy and doubled our customer acquisition rate.",
-        "website_social_links": "emilyrodriguez.com, @emilyrodriguez"
+        "website_social_links": "emilyrodriguez.com, @emilyrodriguez",
+        "status": "active"
     },
     {
         "name": "David Thompson",
@@ -68,7 +71,8 @@ sample_consultants = [
         "education": "CFA, MBA in Finance from University of Texas, BS in Accounting",
         "projects_completed": "Managed $500M+ in client assets, Advised on 20+ M&A transactions",
         "references_testimonials": "David's financial guidance helped us grow our portfolio by 25% annually.",
-        "website_social_links": "davidthompson.com, linkedin.com/in/davidthompson"
+        "website_social_links": "davidthompson.com, linkedin.com/in/davidthompson",
+        "status": "active"
     },
     {
         "name": "Lisa Wang",
@@ -83,7 +87,8 @@ sample_consultants = [
         "education": "MA in Industrial Psychology from University of Washington, SHRM-SCP certification",
         "projects_completed": "Reduced turnover by 30% for 5 companies, Implemented leadership programs for 200+ managers",
         "references_testimonials": "Lisa helped us build a culture that attracts and retains top talent.",
-        "website_social_links": "lisawangconsulting.com, linkedin.com/in/lisawang"
+        "website_social_links": "lisawangconsulting.com, linkedin.com/in/lisawang",
+        "status": "active"
     }
 ]
 

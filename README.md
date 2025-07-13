@@ -14,8 +14,9 @@ A curated consulting discovery platform where clients can search and view consul
 - **Reset Functionality**: Clear all filters with one click
 
 ### For Admins
+- **Secure Admin Dashboard**: Password-protected admin panel with consultant management
+- **Status Management**: Approve, reject, activate, or deactivate consultants
 - **Profile Management**: Create and manage consultant profiles via API
-- **No Authentication Required**: Simple admin access for MVP
 - **Database Seeding**: Pre-populated with sample consultant data
 
 ## 🛠️ Tech Stack
@@ -63,18 +64,42 @@ Before starting the application, you need to set up your environment variables:
 
 2. **Update the `.env` file** with your configuration:
    ```env
-   # Database Configuration
+   # =============================================================================
+   # DATABASE CONFIGURATION
+   # =============================================================================
+   
+   # Production Database (Neon DB)
    DATABASE_URL=postgresql://username:password@host:port/database?sslmode=require&channel_binding=require
-   
-   # Frontend Configuration
-   REACT_APP_API_URL=http://localhost:8000
-   
-   # Backend Configuration
-   BACKEND_HOST=0.0.0.0
-   BACKEND_PORT=8000
    
    # Development Database (for local development)
    LOCAL_DATABASE_URL=postgresql://postgres:password@localhost:5432/askmyconsultant
+   
+   # =============================================================================
+   # BACKEND CONFIGURATION
+   # =============================================================================
+   
+   BACKEND_HOST=0.0.0.0
+   BACKEND_PORT=8000
+   
+   # Registration Form URL (used by backend)
+   REGISTRATION_FORM_URL=https://forms.google.com/dummy-consultant-registration-form
+   
+   # Admin Configuration
+   ADMIN_PASSWORD=your-secure-password-here
+   ADMIN_URL_PATH=/admin-panel-2025-secure-access
+   
+   # =============================================================================
+   # FRONTEND CONFIGURATION
+   # =============================================================================
+   
+   # API URL for frontend to connect to backend
+   REACT_APP_API_URL=http://localhost:8000
+   
+   # Registration Form URL (used by frontend - React requires REACT_APP_ prefix)
+   REACT_APP_REGISTRATION_FORM_URL=https://forms.google.com/dummy-consultant-registration-form
+   
+   # Admin URL Path (used by frontend - React requires REACT_APP_ prefix)
+   REACT_APP_ADMIN_URL_PATH=/admin-panel-2025-secure-access
    ```
 
 3. **Important**: Never commit your `.env` file to version control. It's already included in `.gitignore`.
@@ -119,6 +144,8 @@ askmyconsultant/
 | GET    | /api/countries           | Get unique countries                 |
 | GET    | /api/states              | Get states (filtered by country)     |
 | GET    | /api/cities              | Get cities (filtered by country/state) |
+| GET    | /api/admin/consultants   | Admin: Get all consultants (with password) |
+| PUT    | /api/admin/consultant/{id}/status | Admin: Update consultant status |
 
 ## 👤 Consultant Profile Structure
 
@@ -138,6 +165,12 @@ askmyconsultant/
 - Projects Completed
 - References / Testimonials
 - Website or Social Media Links
+
+### **Status Management**
+- **active**: Visible to clients in search results
+- **inactive**: Hidden from clients but preserved in database
+- **pending**: Awaiting admin approval
+- **rejected**: Rejected by admin
 
 ## 🎨 Frontend Features
 
@@ -186,6 +219,11 @@ docker-compose logs -f
 
 # Stop services
 docker-compose down
+
+# Clean restart (removes containers, images, and rebuilds)
+docker-compose down
+docker system prune -f
+docker-compose up --build
 
 # Rebuild and start
 docker-compose up --build --force-recreate
